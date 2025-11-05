@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export default function About() {
-    console.log("loading is word")
+    throw new Error("there was a huge error")
   return (
     <div>
       about page
