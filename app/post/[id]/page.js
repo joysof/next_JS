@@ -1,4 +1,12 @@
 import { getPost } from "@/app/lip/getAllPosts"
+export async function generateMetadata({params}) {
+    const {id} = await params
+    const post = await getPost(id)
+    return{
+        title : post.title,
+        description : post.body
+    }
+}
 
 export default async function post({params}) {
     const {id} = await params
