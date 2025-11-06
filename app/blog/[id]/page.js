@@ -6,6 +6,6 @@ export default async function  BlogPage({params}) {
     console.log(id)
     return <div>
         <p>the blog id is {id}</p>
-        <Image src={img} alt="this is a img"/>
+        <Image placeholder='blur' src={img} alt="this is a img"/>
     </div>
 }
