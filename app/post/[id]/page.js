@@ -1,6 +1,8 @@
 
+import Comments from "@/app/components/Comments"
 import getPost from "@/app/lip/getPost"
 import getPostComments from "@/app/lip/getPostComment"
+import { Suspense } from "react"
 export async function generateMetadata({params}) {
     const {id} =await params
     const post = await getPost(id)
@@ -13,10 +15,10 @@ export async function generateMetadata({params}) {
 export default async function Post({params}) {
     const {id} = await params
     const postPromise = getPost(id)
+    const post = await postPromise
     const commentsPromise =getPostComments(id)
-    const [post , comments] = await Promise.all([postPromise , commentsPromise])
-    console.log("this is comments" , comments)
-    console.log(" this is post" ,post)
+    // const [post , comments] = await Promise.all([postPromise , commentsPromise])
+
     return(
         <div className="w-[75%]">
             <h2>This is post id {id}</h2>
@@ -25,14 +27,9 @@ export default async function Post({params}) {
 
             <div className="mt-10">
                 <h3>comments</h3>
-                
-                <ul>
-                   {
-                    comments.map((comment) =>(
-                        <li key={comment.id}>{comment.body}</li>
-                    ))
-                   }
-                </ul>
+                <Suspense fallback ="<h1>Loading comments...</h1>">
+                <Comments promise ={commentsPromise}/>
+                </Suspense>
             </div>
         </div>
     )
